@@ -11,3 +11,8 @@ The app is quite simple:
   6. Repeat 10x
   7. If you need a hint, click the "Hint" button and a new window is shown, with a picture of the staff with all of the notes and it's names.
   8. After you're done, your score is shown, and you can start again.
+  
+#Screnshot:
+![Screenshot](/screenshot.png)
+  
+
