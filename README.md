@@ -1,6 +1,6 @@
 # Music Theory App
-*Agora, às 14:29, eu consegui jogar um arquivo do NetBeans para dentro do GitHub. Foi um momento histórico. Agora eu preciso ver o que mais se faz com esse processo.
-*This is a really simple app that I created in order to practice a little of what I've learned in Java. I've always had some difficulties in figuring ut how to actually practice what I have learned. One day I was playing the guitar and I thought about making a small app that would show me the musical notes on the staff, and I would have to guess which note was it.
+
+This is a really simple app that I created in order to practice a little of what I've learned in Java. I've always had some difficulties in figuring ut how to actually practice what I have learned. One day I was playing the guitar and I thought about making a small app that would show me the musical notes on the staff, and I would have to guess which note was it.
 
 The app is quite simple:
   1. You have and image of the staff.
