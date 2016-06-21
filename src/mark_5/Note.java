@@ -15,20 +15,25 @@ import java.util.ArrayList;
  */
 class Note
 {    
-    static ArrayList<String> notes = new ArrayList();
+    static ArrayList<String> notes = fillArray();
     String name;
     int pos;
     Image image;
     Point noteLoc;
     
+    /**Método informa onde será posicionada a imagem da "whole-note" no staff
+     * o método usa a posição da nota no array e a multiplica por um fator
+     * para posicioná-la no lugar adequado
+     * Assim, não é preciso assinalar manualmente a posição para cada nota
+    */
     public void setNoteLoc()
     {
         for(String noteName : notes)
         {
             if (noteName.toUpperCase().equals(name.toUpperCase())) 
             {
-                int fatorPos = notes.indexOf(noteName);
-                noteLoc = new Point(100, (110-(12*fatorPos)));
+                int posFactor = notes.indexOf(noteName);
+                noteLoc = new Point(100, (110-(12*posFactor)));
             }
         }
     }
@@ -38,14 +43,13 @@ class Note
         return noteLoc;
     }
     Note(String note)
-    {        
-        notes = fillArray();
+    {
         name = note;
         pos = notes.indexOf(name);
         setNoteLoc();
     }
     
-    public ArrayList<String> fillArray()
+    public static ArrayList<String> fillArray()
     {
         String[] notesA = {"D","E","F","G","A","B","C","Dh","Eh","Fh","Gh"};
         ArrayList<String> array = new ArrayList<String>();

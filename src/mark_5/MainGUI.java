@@ -353,12 +353,21 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel wholeNoteLabel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Atualiza a label e a barra de progresso de acordo com o Round
+     */
 private void updateRound()
     {
         roundLabel.setText(currentSession.currentRound.roundNum + "/10");
         sessionProgress.setValue(currentSession.currentRound.roundNum);
     }
     
+
+    /**
+     * Pega uma nota aleatória
+     * Deixa a imagem da nota visível
+     * Coloca a imagem na posição correta
+     */
     public void showNote()
     { 
         currentSession.currentRound.note = Round.getRandomNote();
