@@ -22,19 +22,19 @@ final class Note
     public Point noteLoc;
     
     /**
-     * Método informa onde será posicionada a imagem da "whole-note" no staff
-     * o método usa a posição da nota no array e a multiplica por um fator
-     * para posicioná-la no lugar adequado
-     * Assim, não é preciso assinalar manualmente a posição para cada nota
+     * Method informs where the "whole-note" image will be positioned at on the staff
+     * The method uses the note's position on the array and multiplies it by a 
+     * constant
+     * This way, there is no need to manually assign the position for every note
     */
+    
     public void setNoteLoc()
     {
         noteLoc = new Point(100, (110-(12*pos)));
     }
     
     /**
-     * Retorna a loc. da nota como um "Point" (x, y)
-     * @return 
+     * @return the note's location as a "x-y Point"
      */
     public Point getNoteLoc()
     {
@@ -49,9 +49,9 @@ final class Note
     }
     
     /**
-     * Basicamente inicializa um ArrayList de String[s]
-     * convertendo um Array em ArrayList
-     * @return 
+     * Initiallizes a ArrayList of String by
+     * converting an Array into an ArrayList
+//     * @return ArrayList<String> the ArrayList that contains the notes' names 
      */
     public static ArrayList<String> fillArray()
     {
