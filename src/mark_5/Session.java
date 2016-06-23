@@ -9,23 +9,27 @@ package mark_5;
  *
  * @author Gustavo
  */
-public class Session {
-
-    int sessionNum;
-    int rightAnswers;
-    int hints;
-    phases gamePhase;
-    Round currentRound;
+public class Session
+{
+    public int sessionNum;
+    public int rightAnswers;
+    public int hints;
+    public phases gamePhase;
+    Round currentRound;    
     
-    
+    /**
+     * Sets the first round of this particular session
+     * Sets the game into "wait" mode
+     */
     Session()
     {
-        //Todos os preparativos para quando uma nova sessão é iniciada.
-        //Levar em consideração que isso vale para "Restart" e para "New Session"
         currentRound = new Round(1, "");
         gamePhase = phases.wait;
     }
     
+    /**
+     * @return a String with a welcome message
+     */
     public static String Welcome()
     {
         return ("Welcome to the game! "
@@ -33,12 +37,14 @@ public class Session {
                 + " Press Start\n");
     }
     
+        /**
+         * Show an overview of this practice session
+         * Shows the num. of right answers and the num. of times the user used the
+         * "Hint" window
+         * @return A String to be appended in the textArea of the GUI
+         */
         public String showSessionResults()
-    {
-        /*
-        rightAnswers deve ficar aqui
-        */
-        
+    {        
         String sessionResult = "";
         sessionResult += ("\nSession finished!\n");
         sessionResult += ("You answered " + rightAnswers + "/10 correctly!\n");
@@ -54,7 +60,12 @@ public class Session {
         sessionResult += ("You've used Hint " + hints + " times.\n");
         return sessionResult;
     }
-        
+    
+    /**
+     * Shows the result (correct/incorrect) of this particular round
+     * in the practice session
+     * @return A String to be appended in the textArea of the GUI
+     */
     public String roundResult()
     {
         String roundResult;
@@ -69,14 +80,12 @@ public class Session {
             roundResult = "\nThat is incorrect\n";
         return roundResult;
     }
-
+    
+    /**
+     * Sets the user guess as soon as the user clicks on the List
+     * @param userGuessNote 
+     */
     void setUserGuess(String userGuessNote) {
         currentRound.userGuess = userGuessNote;
-    }
-    
-    public String playRound()
-    {
-        currentRound.roundNum++;
-        return roundResult();
     }
 }
