@@ -5,7 +5,6 @@
  */
 package mark_5;
 
-import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
