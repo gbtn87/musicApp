@@ -32,16 +32,24 @@ class Note
         {
             if (noteName.toUpperCase().equals(name.toUpperCase())) 
             {
-                int posFactor = notes.indexOf(noteName);
-                noteLoc = new Point(100, (110-(12*posFactor)));
+                noteLoc = new Point(100, (110-(12*pos)));
             }
         }
     }
     
+    /**
+     * Retorna a loc. da nota como um "Point" (x, y)
+     * @return 
+     */
     public Point getNoteLoc()
     {
         return noteLoc;
     }
+    
+    /**
+     * Construtor: toda vez que eu criar uma nova nota, ele executa esses passos
+     * @param note 
+     */
     Note(String note)
     {
         name = note;

@@ -12,18 +12,19 @@ package mark_5;
 class Round {
     int roundNum;
     Note note;
-    String userGuess = "";
+    String userGuess;
     
-    Round(int roundNum)
+    Round(int roundNum, String lastUserGuess)
     {
         this.roundNum = roundNum;
-        note = getRandomNote();
+        this.note = getRandomNote();
+        this.userGuess = lastUserGuess;
     }
 
-    static boolean checkNotes(Note currentNote, String input)
+    static boolean checkUserGuess(Note currentNote, String userGuess)
     {
         String cleanNote = currentNote.name.substring(0, 1).toUpperCase();
-        if(cleanNote.equals(input.toUpperCase()))
+        if(cleanNote.equals(userGuess.toUpperCase()))
             return true;
         else
             return false;

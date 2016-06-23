@@ -10,32 +10,27 @@ package mark_5;
  * @author Gustavo
  */
 public class Session {
-    /**
-     * uma variável para guardar todos os resultados em true, false.
-     * uma variável para guardar o round da sessão
-     * sempre que eu clicar em start ou restart, uma sessão zerada é criada
-     * Será que eu não estarei criando milhões de sessões? utilizar um dispose? dentro do model haverá um campo "currentSession"
-     * Não, pois o último objeto apontado por "session" será "garbage-collected"
-     * 
-     * um método para ir ao próximo round
-     *  cria uma nova nota, mostra-a no app
-     */
+
     int sessionNum;
     int rightAnswers;
     int hints;
-    
+    phases gamePhase;
     Round currentRound;
     
-    public void increaseHints()
-    {
-        hints++;
-    }
     
     Session()
     {
         //Todos os preparativos para quando uma nova sessão é iniciada.
         //Levar em consideração que isso vale para "Restart" e para "New Session"
-        currentRound = new Round(1);
+        currentRound = new Round(1, "");
+        gamePhase = phases.wait;
+    }
+    
+    public static String Welcome()
+    {
+        return ("Welcome to the game! "
+                + "\nLet's begin!"
+                + " Press Start\n");
     }
     
         public String showSessionResults()
@@ -63,7 +58,7 @@ public class Session {
     public String roundResult()
     {
         String roundResult;
-        boolean answer = currentRound.checkNotes(currentRound.note,
+        boolean answer = Round.checkUserGuess(currentRound.note,
                 currentRound.userGuess);
         if (answer)
         {

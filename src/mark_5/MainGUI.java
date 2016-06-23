@@ -19,7 +19,6 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Creates new form MainGUI
      */
-    Model gameModel;
     Session currentSession;
     ListSelectionModel notesListSelModel;
     HintDialog hintDialog;
@@ -27,15 +26,17 @@ public class MainGUI extends javax.swing.JFrame {
     public MainGUI() {
         initComponents();
         hintDialog = new HintDialog(this,true);
-        gameModel = new Model();
         notesListSelModel = notesList.getSelectionModel();
         
         notesPanel.setLayout(null);
-        infoTextArea.append(gameModel.Welcome());
+        infoTextArea.append(currentSession.Welcome());
         submitButton.setEnabled(false);
+        
         ImageIcon wholeNoteIcon = new ImageIcon(
-                new ImageIcon("C:\\Users\\Gustavo\\Desktop\\whole-note.png")
-                        .getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+                new ImageIcon(getClass().getResource("/mark_5/whole-note.png"))
+                        .getImage()
+                        .getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+        
         wholeNoteLabel.setIcon(wholeNoteIcon);        
         wholeNoteLabel.setVisible(false);
     }
@@ -236,28 +237,27 @@ public class MainGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         hintDialog.setLocationRelativeTo(null);
         hintDialog.setVisible(true);
-        gameModel.hints++;
+        currentSession.hints++;
     }//GEN-LAST:event_hintButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         if (currentSession.currentRound.roundNum < 10)
         {
-            ShowResult();
+            showRoundResult();
             nextRound();
-            showNote();
+            showNoteOnStaff();
             //a primeira nota ja foi mostrada, portanto não preciso mostrá-la
-            //tem que mostrar o resultado na textArea e chamar o próximo round
-            
+            //tem que mostrar o resultado na textArea e chamar o próximo round            
         }
         else
         {
             //só mostra o resultado, sem passar para o próximo round
-            ShowResult();
+            showRoundResult();
             showSessionResults();
             notesListSelModel.clearSelection();
             submitButton.setEnabled(false);
-            gameModel.gamePhase = phases.wait;
+            currentSession.gamePhase = phases.wait;
         }
 
     }//GEN-LAST:event_submitButtonActionPerformed
@@ -267,7 +267,7 @@ public class MainGUI extends javax.swing.JFrame {
         
         if (!notesListSelModel.getValueIsAdjusting())
         {
-            if (gameModel.gamePhase == phases.inSession) {
+            if (currentSession.gamePhase == phases.inSession) {
                 submitButton.setEnabled(true);
             }
             try
@@ -283,15 +283,13 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         // TODO add your handling code here:
-        //pra que isso? startButton.setText("New Session");
         currentSession = new Session();      
         infoTextArea.append("\nNew Session Started!\n");
-        gameModel.gamePhase = phases.inSession;
-        updateRound();
-//Mostra a nota
-        //Esse "append" será substituido pela geração de uma figura
-        //com a nota correta
-        showNote();
+        currentSession.gamePhase = phases.inSession;
+        updateRoundLabels();
+        showNoteOnStaff();
+        notesListSelModel.clearSelection();
+        submitButton.setEnabled(false);
     }//GEN-LAST:event_startButtonActionPerformed
 
     /**
@@ -356,7 +354,7 @@ public class MainGUI extends javax.swing.JFrame {
     /**
      * Atualiza a label e a barra de progresso de acordo com o Round
      */
-private void updateRound()
+private void updateRoundLabels()
     {
         roundLabel.setText(currentSession.currentRound.roundNum + "/10");
         sessionProgress.setValue(currentSession.currentRound.roundNum);
@@ -368,7 +366,7 @@ private void updateRound()
      * Deixa a imagem da nota visível
      * Coloca a imagem na posição correta
      */
-    public void showNote()
+    public void showNoteOnStaff()
     { 
         currentSession.currentRound.note = Round.getRandomNote();
         if (wholeNoteLabel.isVisible()== false)
@@ -384,13 +382,14 @@ private void updateRound()
         infoTextArea.append(currentSession.showSessionResults());
     }    
 
-    private void ShowResult()
+    private void showRoundResult()
     {
         infoTextArea.append(currentSession.roundResult());
     }
 
     private void nextRound() {
-        currentSession.currentRound = new Round(currentSession.currentRound.roundNum+1);
-        updateRound();
+        currentSession.currentRound = new Round(currentSession.currentRound.roundNum+1, 
+        currentSession.currentRound.userGuess);
+        updateRoundLabels();
     }
 }
