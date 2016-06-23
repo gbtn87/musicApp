@@ -37,13 +37,13 @@ public class Session
                 + " Press Start\n");
     }
     
-        /**
-         * Show an overview of this practice session
-         * Shows the num. of right answers and the num. of times the user used the
-         * "Hint" window
-         * @return A String to be appended in the textArea of the GUI
-         */
-        public String showSessionResults()
+    /**
+     * Show an overview of this practice session
+     * Shows the num. of right answers and the num. of times the user used the
+     * "Hint" window
+     * @return A String to be appended in the textArea of the GUI
+     */
+    public String showSessionResults()
     {        
         String sessionResult = "";
         sessionResult += ("\nSession finished!\n");
