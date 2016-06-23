@@ -5,14 +5,11 @@
  */
 package mark_5;
 
-/**
- *
- * @author Gustavo
- */
+
 class Round {
-    int roundNum;
-    Note note;
-    String userGuess;
+    public int roundNum;
+    public Note note;
+    public String userGuess;
     
     Round(int roundNum, String lastUserGuess)
     {
@@ -21,6 +18,14 @@ class Round {
         this.userGuess = lastUserGuess;
     }
 
+    /**
+     * Compares the current round's note with the user guess
+     * @param currentNote the current note on the round
+     * (?) Why not use the own field of the class instead of
+     *     passing a param. ?
+     * @param userGuess the guess selected on the list by the user
+     * @return true if the user got it right, false otherwise
+     */
     static boolean checkUserGuess(Note currentNote, String userGuess)
     {
         String cleanNote = currentNote.name.substring(0, 1).toUpperCase();
@@ -30,6 +35,11 @@ class Round {
             return false;
     }
     
+    /**
+     * Selects a note randomly in an Array
+     * (?) Should this be in the class "Note" ?
+     * @return a random note to be used in the current round
+     */
     static Note getRandomNote()
     {
         String[] notesA = {"D","E","F","G","A","B","C","Dh","Eh","Fh","Gh"};
