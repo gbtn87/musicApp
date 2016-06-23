@@ -50,7 +50,6 @@ public class MainGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        session1 = new mark_5.Session();
         mainTabbedPane = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         hintButton = new javax.swing.JButton();
@@ -67,10 +66,6 @@ public class MainGUI extends javax.swing.JFrame {
         wholeNoteLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(720, 480));
@@ -200,21 +195,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Which Note is on the Staff?", jPanel2);
 
-        jMenu1.setText("Opções");
-
-        jMenu3.setText("jMenu3");
-
-        jMenuItem1.setText("jMenuItem1");
-        jMenu3.add(jMenuItem1);
-
-        jMenu1.add(jMenu3);
-
-        jMenu4.setText("jMenu4");
-        jMenu1.add(jMenu4);
-
-        jMenu5.setText("jMenu5");
-        jMenu1.add(jMenu5);
-
+        jMenu1.setText("Options");
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -233,6 +214,11 @@ public class MainGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Shows the window with the Hint, in case the user needs some help
+     * Updates the number of times the user has used the hint
+     * @param evt 
+     */
     private void hintButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hintButtonActionPerformed
         // TODO add your handling code here:
         hintDialog.setLocationRelativeTo(null);
@@ -240,19 +226,22 @@ public class MainGUI extends javax.swing.JFrame {
         currentSession.hints++;
     }//GEN-LAST:event_hintButtonActionPerformed
 
+    /**
+     * This method plays the round, shows the result and calls the next round
+     * If it's the last round in the session, it plays it
+     * and call the results of the current session
+     * @param evt 
+     */
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
         if (currentSession.currentRound.roundNum < 10)
         {
             showRoundResult();
             nextRound();
-            showNoteOnStaff();
-            //a primeira nota ja foi mostrada, portanto não preciso mostrá-la
-            //tem que mostrar o resultado na textArea e chamar o próximo round            
+            showNoteOnStaff();            
         }
         else
         {
-            //só mostra o resultado, sem passar para o próximo round
             showRoundResult();
             showSessionResults();
             notesListSelModel.clearSelection();
@@ -262,8 +251,15 @@ public class MainGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_submitButtonActionPerformed
 
+    /**
+     * Every time the user selects an item on the list, this method is run
+     * Enables the submit button (to avoid submitting null guesses)
+     * Gets the String of the selected item in the list and substrings it
+     * Finally, it sets the userGuess for this round
+     * (?) Should it be inside Round instead of Session ?
+     * @param evt 
+     */
     private void notesListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_notesListValueChanged
-        // TODO add your handling code here:
         
         if (!notesListSelModel.getValueIsAdjusting())
         {
@@ -281,6 +277,16 @@ public class MainGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_notesListValueChanged
 
+    /**
+     * Starts a new session
+     * Creates a new session Object
+     * Puts the game into "inSession" mode
+     * Calls a new round (that happens inside the Session Constructor)
+     * and shows a note on the staff
+     * Updates the label and the progress bar 
+     * Clears any selection and disables the "Submit" button
+     * @param evt 
+     */
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         // TODO add your handling code here:
         currentSession = new Session();      
@@ -331,11 +337,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JButton hintButton;
     private javax.swing.JTextArea infoTextArea;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
@@ -343,7 +345,6 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JList notesList;
     private javax.swing.JPanel notesPanel;
     private javax.swing.JLabel roundLabel;
-    private mark_5.Session session1;
     private javax.swing.JProgressBar sessionProgress;
     private javax.swing.JLabel staffLabel;
     private javax.swing.JButton startButton;
@@ -352,9 +353,9 @@ public class MainGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Atualiza a label e a barra de progresso de acordo com o Round
+     * Updates the Label and the progress bar according to the round number
      */
-private void updateRoundLabels()
+    private void updateRoundLabels()
     {
         roundLabel.setText(currentSession.currentRound.roundNum + "/10");
         sessionProgress.setValue(currentSession.currentRound.roundNum);
@@ -362,9 +363,9 @@ private void updateRoundLabels()
     
 
     /**
-     * Pega uma nota aleatória
-     * Deixa a imagem da nota visível
-     * Coloca a imagem na posição correta
+     * Gets a Random note
+     * Makes the whole-note image visible
+     * Positions the whole-note image correctly
      */
     public void showNoteOnStaff()
     { 
@@ -376,17 +377,28 @@ private void updateRoundLabels()
         wholeNoteLabel.setLocation(currentSession.currentRound.note.getNoteLoc());
     }
     
-    
+    /**
+     * Appends the text with the results of the session to the Text Area
+     */
     public void showSessionResults()
     {
         infoTextArea.append(currentSession.showSessionResults());
     }    
 
+    /**
+     * Appends the text with the results of the round to the Text Area
+     */
     private void showRoundResult()
     {
         infoTextArea.append(currentSession.roundResult());
     }
 
+    /**
+     * Calls a new round with the last user guess
+     * in case the new round shows the exact same note, so that the user can
+     * just hit submit again without having to click the list one more time
+     * updates the labels
+     */
     private void nextRound() {
         currentSession.currentRound = new Round(currentSession.currentRound.roundNum+1, 
         currentSession.currentRound.userGuess);
